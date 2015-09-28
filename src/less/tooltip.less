@@ -1,0 +1,228 @@
+/**
+ *
+ * Pure CSS implementation of Tooltips.
+ *
+ * Usage:
+ * Tooltip Content - content of [data-title] attribute.
+ * Use class spr-tt for default tooltip appearing below the element.
+ * Use spt-tt--t, spt-tt--r, spt-tt--l class for tooltip to appear on top, right and left of the element respectively.
+ *
+ */
+
+/*
+  =========================Variables=========================
+*/
+
+@bgColor: #3d464d;
+/* Base Colour of tooltips */
+@zindexTooltip : 2;
+/* z-index tooltips */
+@widthTT : 5px;
+@radiusTT : 0px;
+@textColor: #FFF;
+/* Text Colour of tooltips */
+
+@successColor: #449d44;
+@errorColor: #d9534f;
+@warnColor: #f0ad4e;
+
+/*
+  ==================================================================
+  =========================Base Definitions=========================
+  ==================================================================
+*/
+.tt {
+  position: relative;
+  cursor: default;
+
+  &:after, &:before {
+    .position(50%, 100%);
+    position: absolute;
+    z-index: @zindexTooltip;
+    .opacity(0);
+    visibility: hidden;
+    .transform(translateX, -50%);
+    .box-sizing(initial);
+  }
+
+  /* Tooltip Content */
+  &:after {
+    white-space: nowrap;
+    content: attr(data-title);
+    padding: 3px 8px;
+    margin-top: @widthTT;
+    color: @textColor;
+    .border-radius(@radiusTT);
+    background-color: @bgColor;
+  }
+
+  /* Tooltip pointer */
+  &:before {
+    content: '';
+    border: @widthTT solid transparent;
+    border-bottom-color: @bgColor;
+    margin-top: -@widthTT;
+  }
+
+  &:hover:after, &:hover:before {
+    visibility: visible;
+    .opacity(100);
+    .transition(opacity 0.3s linear);
+  }
+
+  &.tt--success::before {
+    border-bottom-color: @successColor;
+  }
+  &.tt--error::before {
+    border-bottom-color: @errorColor;
+  }
+  &.tt--warn::before {
+    border-bottom-color: @warnColor;
+  }
+}
+
+/*
+  ==================================================================
+  =========================Orientations=============================
+  ==================================================================
+*/
+.tt--sticky {
+  &:after, &:before {
+    .opacity(100);
+    visibility: visible;
+  }
+}
+
+//TOP
+.tt--t {
+  &:after, &:before {
+    .position(50%, 0);
+  }
+  &:before {
+    border-bottom-color: transparent;
+    border-top-color: @bgColor;
+    margin-top: -(@widthTT);
+  }
+
+  &:after {
+    .translate(-50%, -100%);
+    margin-top: -(@widthTT);
+  }
+}
+
+//LEFT
+.tt--l {
+  &:after, &:before {
+    .position(0, 50%);
+  }
+  &:before {
+    border-bottom-color: transparent;
+    border-left-color: @bgColor;
+  }
+
+  &:after {
+    margin-top: 0px;
+    margin-left: -(@widthTT);
+    .translate(-100%, -50%);
+  }
+}
+
+//RIGHT
+.tt--r {
+  &:after, &:before {
+    .position(100%, 50%);
+  }
+  &:before {
+    border-bottom-color: transparent;
+    border-right-color: @bgColor;
+  }
+
+  &:after {
+    margin-top: 0px;
+    margin-left: @widthTT;
+    .translate(0%, -50%);
+  }
+}
+
+//To hide tooltip if the data-title is empty.
+.tt[data-title=""] {
+  &:after, &:before {
+    .opacity(0);
+  }
+}
+
+/*
+  ==================================================================
+  =============================Costumes=============================
+  ==================================================================
+*/
+.tt--success {
+  &:after {
+    background-color: @successColor;
+  }
+}
+
+.tt--error {
+  &:after {
+    background-color: @errorColor;
+  }
+}
+
+.tt--warn {
+  &:after {
+    background-color: @warnColor;
+  }
+}
+
+/*
+  ==================================================================
+  ===============================Mixins=============================
+  ==================================================================
+*/
+.opacity(@opacity: 100) {
+  opacity: @opacity / 100;
+  filter: ~"alpha(opacity=@{opacity})";
+}
+
+.box-sizing(@boxmodel) {
+  -webkit-box-sizing: @boxmodel;
+  -moz-box-sizing: @boxmodel;
+  -ms-box-sizing: @boxmodel;
+  box-sizing: @boxmodel;
+}
+
+.transition(@transition) {
+  transition: @transition;
+}
+
+.border-radius(@radius: 5px) {
+  border-radius: @radius;
+}
+
+.transform(@property, @value) {
+  -webkit-transform: ~'@{property}('@value~')';
+  -moz-transform: ~'@{property}('@value~')';
+  -ms-transform: ~'@{property}('@value~')';
+  -o-transform: ~'@{property}('@value~')';
+  transform: ~'@{property}('@value~')';
+}
+
+.transform-origin(@value) {
+  -webkit-transform-origin: @value;
+  -moz-transform-origin: @value;
+  -o-transform-origin: @value;
+  transform-origin: @value;
+}
+
+.translate(@x: 0, @y: 0) {
+  -webkit-transform: translate(@x, @y);
+  -moz-transform: translate(@x, @y);
+  -ms-transform: translate(@x, @y);
+  -o-transform: translate(@x, @y);
+  transform: translate(@x, @y);
+}
+
+.position(@l: 0, @t: 0) {
+  left: @l;
+  top: @t;
+}

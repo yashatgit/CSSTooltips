@@ -1,0 +1,92 @@
+@import "mixins.less";
+
+.tlt-preview {
+  height: 300px;
+  border-bottom: 1px solid #ddd;
+
+  .valign-wrapper {
+    height: inherit;
+  }
+}
+
+.page-header {
+  position: fixed;
+  z-index: 111;
+
+  .nav-btn {
+    &.active {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .nav-wrapper {
+    margin: 0 100px;
+  }
+}
+
+.hero-content {
+  background-color: white;
+  padding: 150px 0 100px 0;
+  background-image: url(../img/exagon-pattern.png);
+}
+
+.features {
+  li {
+    list-style-type: circle;
+  }
+}
+
+.divider {
+  margin: 100px 0;
+}
+
+.dim-body {
+  padding: 15px 0 !important;
+}
+.dim-row {
+  padding: 5px 25px;
+}
+
+.dropdown-menu {
+  border-radius: 0 !important;
+}
+
+
+//Overite
+.noUi-pips {
+  font-size: 10px;
+  font-family: inherit;
+  //font-family: inherit;
+}
+
+.noUi-marker {
+ width: 1px !important;
+}
+
+.noUi-marker-large {
+  height: 10px !important;
+}
+
+.noUi-pips-horizontal {
+  padding: 0;
+}
+
+.card {
+  .card-content{
+    padding: 10px !important;
+  }
+  .card-title {
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit !important;
+  }
+
+  .card-reveal {
+    z-index: 2;
+  }
+}
+
+.colorpicker {
+ position: absolute;
+}
+
