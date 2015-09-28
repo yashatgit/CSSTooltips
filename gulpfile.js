@@ -5,12 +5,13 @@ var gulp = require('gulp'),
     runSequence = require('run-sequence'),
     webpackConfig = require("./webpack.config.js"),
     gutil = require("gulp-util"),
-    template = require('gulp-template-compile');
+    template = require('gulp-template-compile'),
+    ghPages = require('gulp-gh-pages');
 
 
 gulp.task('copy-index-html', function () {
     gulp.src('./src/index.html')
-        .pipe(gulp.dest('./public'));
+        .pipe(gulp.dest('./site'));
 });
 
 gulp.task("webpack:build", function (callback) {
@@ -43,6 +44,11 @@ gulp.task('build', function (callback) {
     runSequence('webpack:build',
         'copy-index-html',
         callback);
+});
+
+gulp.task('deploy', function() {
+    return gulp.src('./site/**/*')
+        .pipe(ghPages());
 });
 
 //gulp.task('move-fonts', function () {
