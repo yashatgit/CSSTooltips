@@ -1,0 +1,166 @@
+/**
+ *
+ * Pure CSS implementation of Tooltips.
+ *
+ * Usage:
+ * Tooltip Content - content of [data-title] attribute.
+ * Use class spr-tt for default tooltip appearing below the element.
+ * Use spt-tt--t, spt-tt--r, spt-tt--l class for tooltip to appear on top, right and left of the element respectively.
+ *
+ */
+/*
+  =========================Variables=========================
+*/
+/* Base Colour of tooltips */
+/* z-index tooltips */
+/* Text Colour of tooltips */
+/*
+  ==================================================================
+  =========================Base Definitions=========================
+  ==================================================================
+*/
+.tt {
+  position: relative;
+  cursor: default;
+  /* Tooltip Content */
+  /* Tooltip pointer */
+}
+.tt:after,
+.tt:before {
+  left: 50%;
+  top: 100%;
+  position: absolute;
+  z-index: 2;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  visibility: hidden;
+  -webkit-transform: translateX( -50% );
+  -moz-transform: translateX( -50% );
+  -ms-transform: translateX( -50% );
+  -o-transform: translateX( -50% );
+  transform: translateX( -50% );
+  -webkit-box-sizing: initial;
+  -moz-box-sizing: initial;
+  -ms-box-sizing: initial;
+  box-sizing: initial;
+}
+.tt:after {
+  white-space: nowrap;
+  content: attr(data-title);
+  padding: 3px 8px;
+  margin-top: 5px;
+  color: #FFF;
+  border-radius: 0px;
+  background-color: #3d464d;
+}
+.tt:before {
+  content: '';
+  border: 5px solid transparent;
+  border-bottom-color: #3d464d;
+  margin-top: -5px;
+}
+.tt:hover:after,
+.tt:hover:before {
+  visibility: visible;
+  opacity: 1;
+  filter: alpha(opacity=100);
+  transition: opacity 0.3s linear;
+}
+.tt.tt--success::before {
+  border-bottom-color: #449d44;
+}
+.tt.tt--error::before {
+  border-bottom-color: #d9534f;
+}
+.tt.tt--warn::before {
+  border-bottom-color: #f0ad4e;
+}
+/*
+  ==================================================================
+  =========================Orientations=============================
+  ==================================================================
+*/
+.tt--sticky:after,
+.tt--sticky:before {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  visibility: visible;
+}
+.tt--t:after,
+.tt--t:before {
+  left: 50%;
+  top: 0;
+}
+.tt--t:before {
+  border-bottom-color: transparent;
+  border-top-color: #3d464d;
+  margin-top: -5px;
+}
+.tt--t:after {
+  -webkit-transform: translate(-50%, -100%);
+  -moz-transform: translate(-50%, -100%);
+  -ms-transform: translate(-50%, -100%);
+  -o-transform: translate(-50%, -100%);
+  transform: translate(-50%, -100%);
+  margin-top: -5px;
+}
+.tt--l:after,
+.tt--l:before {
+  left: 0;
+  top: 50%;
+}
+.tt--l:before {
+  border-bottom-color: transparent;
+  border-left-color: #3d464d;
+}
+.tt--l:after {
+  margin-top: 0px;
+  margin-left: -5px;
+  -webkit-transform: translate(-100%, -50%);
+  -moz-transform: translate(-100%, -50%);
+  -ms-transform: translate(-100%, -50%);
+  -o-transform: translate(-100%, -50%);
+  transform: translate(-100%, -50%);
+}
+.tt--r:after,
+.tt--r:before {
+  left: 100%;
+  top: 50%;
+}
+.tt--r:before {
+  border-bottom-color: transparent;
+  border-right-color: #3d464d;
+}
+.tt--r:after {
+  margin-top: 0px;
+  margin-left: 5px;
+  -webkit-transform: translate(0%, -50%);
+  -moz-transform: translate(0%, -50%);
+  -ms-transform: translate(0%, -50%);
+  -o-transform: translate(0%, -50%);
+  transform: translate(0%, -50%);
+}
+.tt[data-title=""]:after,
+.tt[data-title=""]:before {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+/*
+  ==================================================================
+  =============================Costumes=============================
+  ==================================================================
+*/
+.tt--success:after {
+  background-color: #449d44;
+}
+.tt--error:after {
+  background-color: #d9534f;
+}
+.tt--warn:after {
+  background-color: #f0ad4e;
+}
+/*
+  ==================================================================
+  ===============================Mixins=============================
+  ==================================================================
+*/

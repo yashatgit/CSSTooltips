@@ -6,9 +6,23 @@ var gulp = require('gulp'),
     webpackConfig = require("./webpack.config.js"),
     gutil = require("gulp-util"),
     template = require('gulp-template-compile'),
-    ghPages = require('gulp-gh-pages');
+    ghPages = require('gulp-gh-pages'),
+    minifyCss = require('gulp-minify-css');
+
+/*
+* Creates a lodash template of the less file to be used for the dynamic CSS generation
+* */
+gulp.task('templates', function () {
+    gulp.src('./src/js/templates/*.html')
+        .pipe(template())
+        .pipe(concat('templates.js'))
+        .pipe(gulp.dest('./src/js'));
+});
 
 
+/*
+ * Copies the index html to the site directory (which is used for gh-pages)
+ * */
 gulp.task('copy-index-html', function () {
     gulp.src('./src/index.html')
         .pipe(gulp.dest('./site'));
@@ -40,56 +54,29 @@ gulp.task("webpack:build", function (callback) {
     });
 });
 
-gulp.task('build', function (callback) {
+/*
+* Creates a distribution folder and create tooltip.css and tooltip.minify.css
+* */
+gulp.task('build-dist', function () {
+    return gulp.src('src/less/tooltip.less')
+        .pipe(less())
+        .pipe(concat('tooltip.css'))
+        .pipe(gulp.dest('dist'))
+        .pipe(minifyCss())
+        .pipe(concat('tooltip.min.css'))
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('build-all', function (callback) {
     runSequence('webpack:build',
         'copy-index-html',
+        ['templates', 'build-dist'],
         callback);
 });
 
-gulp.task('deploy', function() {
+gulp.task('deploy-gh-pages', function() {
     return gulp.src('./site/**/*')
         .pipe(ghPages());
 });
 
-//gulp.task('move-fonts', function () {
-//    gulp.src('./*.{ttf,woff,woff2,eof,eot,svg}')
-//        .pipe(gulp.dest('./public'))
-//        .on('end', function () {
-//            del('./*.{ttf,woff,woff2,eof,eot,svg}');
-//        });
-//});
-//gulp.task('styles', function () {
-//    return gulp.src('../less/*.less')
-//        .pipe(less())
-//        .pipe(concat('app.css'))
-//        .pipe(gulp.dest('../css/'));
-//});
 
-//gulp.task('tt-styles', function () {
-//    return gulp.src('../../base/*.less')
-//        .pipe(less())
-//        .pipe(concat('tooltip.css'))
-//        .pipe(gulp.dest('../../base/'));
-//});
-//
-gulp.task('templates', function () {
-    gulp.src('./src/js/templates/*.html')
-        .pipe(template())
-        .pipe(concat('templates.js'))
-        .pipe(gulp.dest('./src/js'));
-});
-//
-//
-//
-//gulp.task('full', ['webpack', 'copy-ttf-files']);
-//
-//// Watch Files For Changes
-//gulp.task('watch', function () {
-//    gulp.watch('../js/templates/*.html', ['templates']);
-//    gulp.watch('../less/*.less', ['styles']);
-//    gulp.watch('../../base/*.less', ['tt-styles']);
-//});
-//
-//// Default Task
-//gulp.task('default', ['styles', 'templates']);
-//gulp.task('watch-default', ['styles', 'templates', 'watch']);

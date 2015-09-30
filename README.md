@@ -16,8 +16,8 @@ Usage
 -----------
 Firstly obtain the CSS file from Github.
 
- - [unminified] https://github.com/yashatgit/CSSTooltips/tree/master/dist
- - [minified] https://github.com/yashatgit/CSSTooltips/tree/master/dist
+ - [unminified] ~4kb https://github.com/yashatgit/CSSTooltips/tree/master/dist/tooltip.css
+ - [minified] ~2kb https://github.com/yashatgit/CSSTooltips/tree/master/dist/tooltip.min.css
 
 Now include the library in the HEAD of your page:
 
