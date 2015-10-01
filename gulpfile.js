@@ -80,3 +80,4 @@ gulp.task('deploy-gh-pages', function() {
 });
 
 
+//git subtree push --prefix site origin gh-pages
